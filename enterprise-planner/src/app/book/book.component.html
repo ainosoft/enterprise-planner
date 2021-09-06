@@ -1,0 +1,22 @@
+<div class="demo">
+    <form [formGroup]="bookForm" (ngSubmit)="submit()">
+
+        <label>Select Book</label>&nbsp;&nbsp;
+        <select formControlName="bookName">
+            <option selected="selected" value="book1">Book1</option> 
+            <option value="Book2">Book2</option>
+        </select><br><br>
+
+        <label>Quantity: </label>
+        <input type="text" formControlName="quantity"><br><br>
+
+        <label>Rate: </label>
+        <input type="text" formControlName="rate"><br><br>
+
+        <label>Total Prise: </label>
+        <input type="text" formControlName="prise"><br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
