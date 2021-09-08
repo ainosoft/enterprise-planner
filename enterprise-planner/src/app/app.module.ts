@@ -8,21 +8,23 @@ import { AppComponent } from './app.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BookComponent } from './book/book.component';
+import { AttributeComponent } from './attribute/attribute.component';
+import { ParticipantGridComponent } from './participant-grid/participant-grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ParticipantComponent,
     NavbarComponent,
-    BookComponent
+    AttributeComponent,
+    ParticipantGridComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModuleSet,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

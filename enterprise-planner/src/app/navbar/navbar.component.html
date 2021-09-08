@@ -1,11 +1,22 @@
 <mat-toolbar>
-
     <div>
         <h1>Enterprise Planner</h1>
     </div>
-    <div class="heading">
-        <a mat-button routerLink="/participants">Add New Participants</a>
-    </div>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/">Activities</a>
+
+    <!-- <a mat-button routerLink="/participants">Add Participants</a>
+    <a mat-button routerLink="/participants">Participants Grid</a> -->
+
+
+    <button mat-button [matMenuTriggerFor]="menu">Participants</button>
+    <mat-menu #menu="matMenu">
+        <a mat-button routerLink="/participants">Add Participants</a><br>
+        <a mat-button routerLink="/grid">Participants Grid</a>
+    </mat-menu>
+
+    <a mat-button routerLink="/">Timeline</a>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

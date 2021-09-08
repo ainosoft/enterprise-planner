@@ -11,10 +11,14 @@ import { Router } from '@angular/router';
 export class ParticipantComponent implements OnInit {
 
   formData:any = {};
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  
   constructor(private router: Router) { }
 
   participantForm = new FormGroup({
-    // name: new FormControl(''),
+    name: new FormControl(''),
+    options: new FormControl(''),
     // quantity: new FormControl(''),
     // rate: new FormControl(''),
   });
@@ -24,12 +28,32 @@ export class ParticipantComponent implements OnInit {
 
   submit(){
     console.log(this.participantForm.value);
-    localStorage.setItem("formData",JSON.stringify(this.participantForm.value));
+    this.formData = Object.assign(this.formData, this.participantForm.value);
+    this.addUser(this.formData);
+    this.participantForm.reset();
   }
 
-  addBooks(){
-    this.router.navigate(["/book"]);
+  addUser(user:any){
+    let users: any[]=[];
+    if(localStorage.getItem('Users')){
+      users=JSON.parse(localStorage.getItem('Users') || '{}');
+      users = [user,...users];
+    }else{
+      users = [user];
+    }
+    localStorage.setItem("Users",JSON.stringify(users));
   }
+
+  // getJSON(){
+  //   // localStorage.getItem("formData",JSON.stringify(this.participantForm.value));
+  //   var obj = JSON.parse(localStorage.getItem('formData'));
+  // }
+
+ 
+
+  // addBooks(){
+  //   this.router.navigate(["/book"]);
+  // }
 
 
 }
