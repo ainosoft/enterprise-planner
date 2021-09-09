@@ -1,13 +1,25 @@
-<h2 class="add">Add Attributes</h2>
+<!-- <label>Participant Name</label> &nbsp; {{navigatedData.name}} <br>
+<label>Participant Type</label> &nbsp; {{navigatedData.type}}
+<hr> -->
+<h2 class="add">
+    Add Attributes</h2>
 
 <div class="demo">
-    <form>
-        <mat-checkbox type="checkbox">Quantity</mat-checkbox><br>
-        <mat-checkbox type="checkbox">Cost</mat-checkbox><br>
-        <mat-checkbox type="checkbox">Brand</mat-checkbox><br>
-        <mat-checkbox type="checkbox">Current</mat-checkbox><br>
-        <mat-checkbox type="checkbox">Unit</mat-checkbox><br>
-        <mat-checkbox type="checkbox">Voltage</mat-checkbox><br><br>
+    <form [formGroup]="attributeForm" (ngSubmit)="onSubmit()">
+        <mat-checkbox formControlName="ch1" type="checkbox">Quantity</mat-checkbox><br>
+        <mat-checkbox formControlName="ch2" type="checkbox">Cost</mat-checkbox><br>
+        <mat-checkbox formControlName="ch3" type="checkbox">Brand</mat-checkbox><br>
+        <mat-checkbox formControlName="ch4" type="checkbox">Current</mat-checkbox><br>
+        <mat-checkbox formControlName="ch5" type="checkbox">Unit</mat-checkbox><br>
+        <mat-checkbox formControlName="ch6" type="checkbox">Voltage</mat-checkbox><br><br>
+
+        <!-- <input matInput formControlName="attribute" placeholder="Enter Your Attribute" autocomplete="false"><br><br> -->
+        <div *ngFor="let value of values; let i = index">
+            <input type="text" [(ngModel)]="value.value" #name="ngModel" name="value{{i}}"> &nbsp;
+            <button mat-raised-button (click)="removevalue(i)">Remove</button><br><br>
+        </div>
+
+        <button mat-raised-button (click)="addValue()">ADD</button><br><br>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
 </div>

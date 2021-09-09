@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ParticipantService } from '../services/participant.service';
+import { Participant } from './participant';
 
 
 @Component({
@@ -11,78 +13,37 @@ import { Router } from '@angular/router';
 export class ParticipantComponent implements OnInit {
 
   formData:any = {};
-  myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, private participantService: ParticipantService) { }
 
   participantForm = new FormGroup({
     name: new FormControl(''),
-    options: new FormControl(''),
-    // quantity: new FormControl(''),
-    // rate: new FormControl(''),
+    type: new FormControl(''),
   });
 
   ngOnInit(): void {
   }
 
-  submit(){
-    console.log(this.participantForm.value);
-    this.formData = Object.assign(this.formData, this.participantForm.value);
-    this.addUser(this.formData);
+  reset(){
     this.participantForm.reset();
   }
 
-  addUser(user:any){
-    let users: any[]=[];
-    if(localStorage.getItem('Users')){
-      users=JSON.parse(localStorage.getItem('Users') || '{}');
-      users = [user,...users];
-    }else{
-      users = [user];
-    }
-    localStorage.setItem("Users",JSON.stringify(users));
+  submit(){
+    this.formData = Object.assign(this.formData, this.participantForm.value);
+    localStorage.setItem("Users",JSON.stringify(this.formData));
+    //method call
+    this.addParticipant(this.participantForm.value);
+    this.router.navigate(["/grid"]);
+    this.participantForm.reset();
   }
 
-  // getJSON(){
-  //   // localStorage.getItem("formData",JSON.stringify(this.participantForm.value));
-  //   var obj = JSON.parse(localStorage.getItem('formData'));
-  // }
-
- 
-
-  // addBooks(){
-  //   this.router.navigate(["/book"]);
-  // }
+  addParticipant(participant){
+    let participants = new Participant();
+    console.log(participant);
+    participants.name = participant.name;
+    participants.type = participant.type;
+    this.participantService.gridData.push(participants);
+  }
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   onAnchorClick(item){
-//     this.selected = item.value; 
-//     this.open = false;
-//     switch(this.selected){
-//         case "A": 
-//           this.router.navigate(["/A"]);
-//           break;
-//     }
-// }

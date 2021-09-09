@@ -10,7 +10,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Select</mat-label>
-            <mat-select formControlName="options">
+            <mat-select formControlName="type">
                 <mat-option value="material">Material</mat-option>
                 <mat-option value="person">Person</mat-option>
                 <mat-option value="electricity">Electricity</mat-option>
@@ -20,8 +20,7 @@
         </mat-form-field><br><br>
 
         <button mat-raised-button color="primary" type="submit">Save</button> &nbsp;&nbsp;
-        <button mat-raised-button color="primary">Reset</button>
-
+        <button mat-raised-button color="primary" (click)="reset()">Reset</button>
 
     </form>
 </div>
