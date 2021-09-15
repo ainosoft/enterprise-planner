@@ -1,11 +1,12 @@
-<!-- <label>Participant Name</label> &nbsp; {{navigatedData.name}} <br>
-<label>Participant Type</label> &nbsp; {{navigatedData.type}}
-<hr> -->
-<h2 class="add">
-    Add Attributes</h2>
+<div class="subnavbar">
+    <label style="font-weight: bold;">Participant Name :</label> &nbsp; {{navigatedData.name}} <br>
+    <label style="font-weight: bold;">Participant Type :</label> &nbsp; {{navigatedData.type}}
+</div>
+
+<h2 class="add">Add Attributes</h2>
 
 <div class="demo">
-    <form [formGroup]="attributeForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="attributeForm" (ngSubmit)="onSubmit(attributeForm.value)">
         <mat-checkbox formControlName="ch1" type="checkbox">Quantity</mat-checkbox><br>
         <mat-checkbox formControlName="ch2" type="checkbox">Cost</mat-checkbox><br>
         <mat-checkbox formControlName="ch3" type="checkbox">Brand</mat-checkbox><br>
@@ -13,13 +14,31 @@
         <mat-checkbox formControlName="ch5" type="checkbox">Unit</mat-checkbox><br>
         <mat-checkbox formControlName="ch6" type="checkbox">Voltage</mat-checkbox><br><br>
 
-        <!-- <input matInput formControlName="attribute" placeholder="Enter Your Attribute" autocomplete="false"><br><br> -->
-        <div *ngFor="let value of values; let i = index">
-            <input type="text" [(ngModel)]="value.value" #name="ngModel" name="value{{i}}"> &nbsp;
-            <button mat-raised-button (click)="removevalue(i)">Remove</button><br><br>
+        <div class="input" *ngFor="let attribute of getAttributesFormControls(); let i = index">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Input</mat-label>
+                <input matInput [formControl]="attribute">
+            </mat-form-field><br> &nbsp;&nbsp;
+            <button mat-raised-button (click)="removevalue(i)" style="height:50px !important;">Remove Attributes</button><br> <br>
         </div>
 
-        <button mat-raised-button (click)="addValue()">ADD</button><br><br>
+        <button mat-raised-button (click)="addValue()">Add Attributes</button><br><br>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
 </div>
+
+
+
+
+
+
+<!-- <label>Attribute {{i}} </label> -->
+<!-- <input formControl="attribute" type="text"> -->
+
+<!-- <div formArrayName="controllerArray">
+            <div *ngFor="let item of formName.controls.controllerArray.controls; let i=index" [formGroupName]="i">
+                <input formControlName="controlerInputName1">
+                <button (click)='removeInput(i)'>remove input</button>
+            </div>
+        </div> -->

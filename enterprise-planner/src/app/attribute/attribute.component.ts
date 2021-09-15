@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-attribute',
@@ -12,38 +12,63 @@ export class AttributeComponent implements OnInit {
   formData:any = {};
   values = [];
 
+  attributeForm: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
 
-  attributeForm = new FormGroup({
-    ch1: new FormControl(''),
-    ch2: new FormControl(''),
-    ch3: new FormControl(''),
-    ch4: new FormControl(''),
-    ch5: new FormControl(''),
-    ch6: new FormControl(''),
-    attribute: new FormControl(''),
-  });
+  
+   }
 
   ngOnInit(): void {
-    // this.navigatedData = history.state;
+    this.navigatedData = history.state;
     // console.log(this.navigatedData);
+
+    this.attributeForm = this.fb.group({
+      ch1: new FormControl(''),
+      ch2: new FormControl(''),
+      ch3: new FormControl(''),
+      ch4: new FormControl(''),
+      ch5: new FormControl(''),
+      ch6: new FormControl(''),
+      attribute: this.fb.array([
+        this.fb.control(null)
+      ])
+ 
+    });
   }
 
-  onSubmit(){
-    // this.formData = this.attributeForm.value;
-    // console.log(this.formData);
+  onSubmit(values){
+    console.log(values);
     this.formData = Object.assign(this.formData, this.attributeForm.value);
     localStorage.setItem("Users",JSON.stringify(this.formData));
   }
 
-  addValue(){
-    this.values.push({value: ""});
-  }
-
-  removevalue(i){
-    this.values.splice(i,1);
-  }
   
 
+  addValue(): void {
+    (this.attributeForm.get('attribute') as FormArray).push(
+      this.fb.control(null)
+    );
+  }
+
+  removevalue(index) {
+    (this.attributeForm.get('attribute') as FormArray).removeAt(index);
+  }
+
+  getAttributesFormControls(): AbstractControl[] {
+    return (<FormArray> this.attributeForm.get('attribute')).controls
+  }
+
+ 
+
 }
+
+
+
+// addValue(){
+  //   this.values.push({value: ""});
+  // }
+
+  // removevalue(i){
+  //   this.values.splice(i,1);
+  // }
