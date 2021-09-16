@@ -19,7 +19,7 @@ pipeline{
             }
             steps{
                 dir("${PROJECT_DIR}"){
-                    nodejs('node-js-12.0.0'){
+                    nodejs('node-js-12.14.0'){
                         withEnv(['npm_config_cache=npm-cache','HOME=.',]){
                              sh '''
                              rm -rf package-lock.json
