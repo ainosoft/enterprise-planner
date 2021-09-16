@@ -6,7 +6,10 @@ pipeline{
     stages{
         stage('Build UI resources'){
             when{
-                branch 'candidate'
+               anyOf {
+                 branch 'review*'
+                 branch 'candidate'
+                }
                 not{
                      changelog '.*\\[maven-release-plugin\\].*'
                 }
@@ -37,7 +40,10 @@ pipeline{
         }
         stage('Stage Build'){
             when{
+              anyOf {
+                 branch 'review*'
                  branch 'candidate'
+                }
                 not{
                      changelog '.*\\[maven-release-plugin\\].*'
                 }
@@ -78,3 +84,4 @@ pipeline{
 
     }
 }
+
