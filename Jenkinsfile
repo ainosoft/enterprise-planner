@@ -30,8 +30,8 @@ pipeline{
                              mkdir -p webapps/appops
                              pwd
                              ls $(pwd)
-                             cp -r dist/enterprise-planner/* webapps/appops/
-                             ls  webapps/appops/
+                             cp -r dist/enterprise-planner/* webapps/enterprise/
+                             ls  webapps/enterprise/
                              '''
                         }
                     }
@@ -66,13 +66,13 @@ pipeline{
                             done
                         }
                         freePortJetty=$(freePort)  
-                        myJettyName='appops-site-jetty'
+                        myJettyName='enterprise-jetty'
                         docker stop $myJettyName || true
                         docker rm $myJettyName || true
                         
                         echo "Starting docker jetty container"
                         pwd
-                        ls $(pwd)/webapps/appops/
+                        ls $(pwd)/webapps/enterprise/
                         docker run --name $myJettyName -d -p $freePortJetty:8080 --mount type=bind,source=$(pwd)/webapps,destination=/var/lib/jetty/webapps jetty
                                           
                         ipAddr="$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \\([0-9.]\\+\\).*/\\1/p')"
