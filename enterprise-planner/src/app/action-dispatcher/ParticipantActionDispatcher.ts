@@ -9,5 +9,4 @@ export class ParticipantActionDispatcher extends BaseActionDispatcher {
     editAttribute(obj: {}) {
         this.participantGrid.EditAttribute(obj);
     }
-
 }
