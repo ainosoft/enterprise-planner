@@ -28,7 +28,7 @@ pipeline{
                              mkdir -p webapps/appops
                              pwd
                              ls $(pwd)
-                             cp -r dist/appops-org-website/* webapps/appops/
+                             cp -r dist/enterprise-planner/* webapps/appops/
                              ls  webapps/appops/
                              '''
                         }
