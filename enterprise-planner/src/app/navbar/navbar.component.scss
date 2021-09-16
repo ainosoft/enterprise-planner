@@ -1,3 +1,10 @@
 .spacer {
     flex: 1 1 auto;
 }
+
+mat-toolbar {
+    background-color: #192f42;
+    color: #ffffff;
+    border-radius: 0;
+    min-height: auto;
+}
