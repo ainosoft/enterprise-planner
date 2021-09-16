@@ -6,8 +6,10 @@ pipeline{
     stages{
         stage('Build UI resources'){
             when{
-                branch 'candidate' 
-                branch 'review-candidate'
+               anyOf {
+                 branch 'review*'
+                 branch 'candidate'
+                }
                 not{
                      changelog '.*\\[maven-release-plugin\\].*'
                 }
@@ -17,7 +19,7 @@ pipeline{
             }
             steps{
                 dir("${PROJECT_DIR}"){
-                    nodejs('node-js-12.0.0'){
+                    nodejs('node-js-12.14.0'){
                         withEnv(['npm_config_cache=npm-cache','HOME=.',]){
                              sh '''
                              rm -rf package-lock.json
@@ -25,11 +27,11 @@ pipeline{
                              npm set //npm.pkg.github.com/:_authToken ${GIT_ACCESS_TOKEN}
                              npm install
                              ng build --prod --base-href
-                             mkdir -p webapps/appops
+                             mkdir -p webapps/enterprise
                              pwd
                              ls $(pwd)
-                             cp -r dist/enterprise-planner/* webapps/appops/
-                             ls  webapps/appops/
+                             cp -r dist/enterprise-planner/* webapps/enterprise/
+                             ls  webapps/enterprise/
                              '''
                         }
                     }
@@ -38,8 +40,10 @@ pipeline{
         }
         stage('Stage Build'){
             when{
+              anyOf {
+                 branch 'review*'
                  branch 'candidate'
-                 branch 'review-candidate'
+                }
                 not{
                      changelog '.*\\[maven-release-plugin\\].*'
                 }
@@ -62,13 +66,13 @@ pipeline{
                             done
                         }
                         freePortJetty=$(freePort)  
-                        myJettyName='appops-site-jetty'
+                        myJettyName='enterprise-jetty'
                         docker stop $myJettyName || true
                         docker rm $myJettyName || true
                         
                         echo "Starting docker jetty container"
                         pwd
-                        ls $(pwd)/webapps/appops/
+                        ls $(pwd)/webapps/enterprise/
                         docker run --name $myJettyName -d -p $freePortJetty:8080 --mount type=bind,source=$(pwd)/webapps,destination=/var/lib/jetty/webapps jetty
                                           
                         ipAddr="$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \\([0-9.]\\+\\).*/\\1/p')"
@@ -80,3 +84,4 @@ pipeline{
 
     }
 }
+

@@ -9,14 +9,4 @@ export class ParticipantActionDispatcher extends BaseActionDispatcher {
     editAttribute(obj: {}) {
         this.participantGrid.EditAttribute(obj);
     }
-
-    // addNewUserForm() {
-    //     this.participantGrid.AddNewScript();
-    // }
-    // onRowClick(value) {
-    //     this.participantGrid.onClickRow(value);
-    // }
-    // enableSearchToolBar(filterValue:{}){
-    //     return this.participantGrid.searchInDraftScript(filterValue);
-    //   }
 }
