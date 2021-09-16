@@ -27,7 +27,7 @@ pipeline{
                              npm set //npm.pkg.github.com/:_authToken ${GIT_ACCESS_TOKEN}
                              npm install
                              ng build --prod --base-href
-                             mkdir -p webapps/appops
+                             mkdir -p webapps/enterprise
                              pwd
                              ls $(pwd)
                              cp -r dist/enterprise-planner/* webapps/enterprise/
