@@ -66,8 +66,7 @@ pipeline{
                         docker stop $myJettyName || true
                         docker rm $myJettyName || true
                         
-                        echo "Starting docker jetty container"
-                        
+                        echo "Starting docker jetty container"   
                         pwd
                         ls $(pwd)/webapps/appops/
                         docker run --name $myJettyName -d -p $freePortJetty:8080 --mount type=bind,source=$(pwd)/webapps,destination=/var/lib/jetty/webapps jetty
