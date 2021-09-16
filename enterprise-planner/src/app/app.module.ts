@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AttributeComponent } from './attribute/attribute.component';
+import { AttributeComponent, ChecklistDatabase } from './attribute/attribute.component';
 import { ParticipantGridComponent } from './participant-grid/participant-grid.component';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { ParticipantGridComponent } from './participant-grid/participant-grid.co
     EnterpriseGridModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ChecklistDatabase],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,21 +6,42 @@
 <h2 class="add">Add Attributes</h2>
 
 <div class="demo">
-    <form [formGroup]="attributeForm" (ngSubmit)="onSubmit(attributeForm.value)">
-        <mat-checkbox formControlName="ch1" type="checkbox">Quantity</mat-checkbox><br>
-        <mat-checkbox formControlName="ch2" type="checkbox">Cost</mat-checkbox><br>
-        <mat-checkbox formControlName="ch3" type="checkbox">Brand</mat-checkbox><br>
-        <mat-checkbox formControlName="ch4" type="checkbox">Current</mat-checkbox><br>
-        <mat-checkbox formControlName="ch5" type="checkbox">Unit</mat-checkbox><br>
-        <mat-checkbox formControlName="ch6" type="checkbox">Voltage</mat-checkbox><br><br>
+    <form [formGroup]="attributeForm" (ngSubmit)="onSubmit()">
+        <!-- (ngSubmit)=" onSubmit(attributeForm.value) -->
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+            </mat-tree-node>
+
+            <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-form-field appearance="fill">
+                    <mat-label>New item...</mat-label>
+                    <input matInput #itemValue placeholder="Ex. Lettuce">
+                </mat-form-field>
+                <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+            </mat-tree-node>
+
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+                <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+                <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+            </mat-tree-node><br>
+
+        </mat-tree>
 
         <div class="input" *ngFor="let attribute of getAttributesFormControls(); let i = index">
-
             <mat-form-field appearance="fill">
                 <mat-label>Input</mat-label>
                 <input matInput [formControl]="attribute">
             </mat-form-field><br> &nbsp;&nbsp;
-            <button mat-raised-button (click)="removevalue(i)" style="height:50px !important;">Remove Attributes</button><br> <br>
+            <button mat-raised-button (click)="saveToTreeData()" style="height:50px !important;">Save</button><br> <br>
+            <button mat-raised-button (click)="removevalue(i)" style="height:50px !important;">Remove</button><br> <br>
         </div>
 
         <button mat-raised-button (click)="addValue()">Add Attributes</button><br><br>
