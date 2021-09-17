@@ -23,14 +23,23 @@ export class TodoItemFlatNode {
 /**
  * The Json object for to-do list data.
  */
- var TREE_DATA = {
-  Fruits: {
-      Apple: null,
-      // Berries: ['Blueberry', 'Raspberry'],
-    },
-  Reminders: [
+//  var TREE_DATA = {
+//   Fruits: {
+//       Apple: null,
+//       // Berries: ['Blueberry', 'Raspberry'],
+//     },
+//   Reminders: [
   
-  ]
+//   ]
+// };
+
+var TREE_DATA = {
+  water: {
+     liquid:null
+    },
+  developer : ['Frontend Developer', 
+               'Backend Developer'
+              ]
 };
 
 /**
@@ -283,7 +292,7 @@ export class AttributeComponent implements OnInit {
 
   saveToTreeData(){
     let x = this.attributeForm.get('attribute').value;
-    var data = this._database.buildFileTree(x, 3);
+    var data = this._database.buildFileTree(x, 1);
     console.log(data);
     // Notify the change.
     this._database.dataChange.next(data);

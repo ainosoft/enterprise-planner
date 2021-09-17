@@ -1,9 +1,13 @@
+import { Attribute } from '../attribute/Attribute';
+
 export class Participant{
     public name: string;
     
     public type: string;
     
-    // private _attribute: String;
+    public attribute: Attribute[]; 
+    
+    
     
     // constructor(name , type){
     //     this.name=name;
